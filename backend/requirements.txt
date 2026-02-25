@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+yfinance
+feedparser
+requests
+pydantic
+transformers
+torch
