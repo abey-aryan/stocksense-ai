@@ -83,7 +83,7 @@ def get_stock_analysis(symbol: str):
 
     try:
         ticker = yf.Ticker(ticker_symbol)
-        info = ticker.fast_info
+        info = ticker.info
         hist = ticker.history(period="30d")
 
         if hist.empty:
@@ -112,17 +112,17 @@ def get_stock_analysis(symbol: str):
         return {
             "symbol": symbol,
             "ticker": ticker_symbol,
-            "name": info.get("longName", symbol),
+           "name": info.get("longName") or info.get("shortName") or symbol,
             "sector": info.get("sector") or ("Cryptocurrency" if is_crypto else "Unknown"),
             "is_crypto": is_crypto,
             "current_price": round(float(current_price), 2),
             "currency": "USD" if is_crypto else "INR",
             "price_change": round(float(price_change), 2),
             "price_change_pct": round(float(price_change_pct), 2),
-            "market_cap": info.get("marketCap", 0),
-            "volume": info.get("volume", 0),
-            "52w_high": info.get("fiftyTwoWeekHigh", current_price),
-            "52w_low": info.get("fiftyTwoWeekLow", current_price),
+            "market_cap": info.get("marketCap"),
+            "volume": info.get("volume"),
+            "52w_high": info.get("fiftyTwoWeekHigh"),
+            "52w_low": info.get("fiftyTwoWeekLow"),
             "price_history": price_history,
             "news": analyzed_news,
             "verdict": verdict,
