@@ -83,7 +83,7 @@ def get_stock_analysis(symbol: str):
 
     try:
         ticker = yf.Ticker(ticker_symbol)
-        info = ticker.info
+        info = {}
         hist = ticker.history(period="30d")
 
         if hist.empty:
